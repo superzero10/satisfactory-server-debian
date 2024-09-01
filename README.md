@@ -1,21 +1,22 @@
 
-# 🚀 Satisfactory Server Setup with AMP on Debian
+# 🚀 Satisfactory Server Setup with AMP on Debian/Ubuntu
 
-This repository contains a series of scripts to **install**, **configure**, and **manage** a Satisfactory server on Debian. The scripts are designed to be **simple**, **automated**, and **easy to use**.
+This repository contains a series of scripts to **install**, **configure**, and **manage** a Satisfactory server on Debian or Ubuntu. The scripts are designed to be **simple**, **automated**, and **easy to use**.
 
 ## 🗂 Script Overview
 
-| Script Name                    | Description                                                              |
-| ------------------------------ | ------------------------------------------------------------------------ |
+| Script Name                      | Description                                                              |
+| -------------------------------- | ------------------------------------------------------------------------ |
 | `install_satisfactory_server.sh` | Main script to install the Satisfactory server and configure dependencies. |
-| `backup_satisfactory.sh`        | Script to perform daily backups of the server.                           |
-| `update_satisfactory.sh`        | Script to automate the daily update of the Satisfactory server.          |
-| `restart_satisfactory.sh`       | Script to automatically restart the server every day.                    |
-| `install_amp.sh`                | Script to install and configure AMP (Application Management Panel).      |
+| `backup_satisfactory.sh`          | Script to perform daily backups of the server.                           |
+| `update_satisfactory.sh`          | Script to automate the daily update of the Satisfactory server.          |
+| `restart_satisfactory.sh`         | Script to automatically restart the server every day.                    |
+| `install_amp.sh`                  | Script to install and configure AMP (Application Management Panel).      |
+| `setup_crontab.sh`                | Script to set up the crontab for automated tasks (backups, updates, restarts). |
 
 ## 📋 Prerequisites
 
-- A recent Debian installation.
+- A fresh Debian or Ubuntu installation.
 - Root or sudo access to install packages and configure services.
 - Internet access to download the necessary dependencies and files.
 
@@ -38,53 +39,29 @@ This script performs the following operations:
 - Configures security with UFW and Fail2Ban.
 - Sets up logrotate to manage server logs.
 
-### 2. Automated Backups
+### 2. Set Up Automated Backups
 
 The `backup_satisfactory.sh` script creates daily backups of the server and deletes backups older than 7 days.
 
-To automate this task, add it to `cron`:
+To automate this task, add it to `cron` using the `setup_crontab.sh` script:
 
 ```bash
-crontab -e
+sudo bash setup_crontab.sh
 ```
 
-Add the following line to run it daily at 4 AM:
+This will schedule the backup script to run daily at 4 AM.
 
-```cron
-0 4 * * * /home/satisfactory/backup_satisfactory.sh
-```
-
-### 3. Automated Updates
+### 3. Automate Daily Updates
 
 The `update_satisfactory.sh` script checks for and applies server updates via SteamCMD, then restarts the server.
 
-Add this script to `cron` to run it daily at 3 AM:
+This is also set up using the `setup_crontab.sh` script, which schedules it to run daily at 3 AM.
 
-```bash
-crontab -e
-```
-
-Add the following line:
-
-```cron
-0 3 * * * /home/satisfactory/update_satisfactory.sh
-```
-
-### 4. Daily Restart
+### 4. Automate Daily Restarts
 
 The `restart_satisfactory.sh` script restarts the server daily to maintain optimal performance.
 
-Add this script to `cron` to run it daily at 5 AM:
-
-```bash
-crontab -e
-```
-
-Add the following line:
-
-```cron
-0 5 * * * /home/satisfactory/restart_satisfactory.sh
-```
+This is also configured via the `setup_crontab.sh` script to run daily at 5 AM.
 
 ### 5. Install the Web Interface (AMP)
 
@@ -99,9 +76,37 @@ This script:
 - Downloads and installs AMP.
 - Creates an AMP instance for Satisfactory.
 - Configures a firewall to allow access to the AMP web interface.
-- (Optional) Configures SSL with Certbot to secure the interface.
+- **(Optional) Configures SSL with Certbot to secure the interface.**
 
-After installation, access the AMP interface at `http://your_domain.com:8080`.
+### ⚙️ Required Variable Changes
+
+**For SSL Configuration in `install_amp.sh`:**
+
+- **DOMAIN**: Replace `"your_domain.com"` with your actual domain name.
+- **EMAIL**: Replace `"your_email@example.com"` with your actual email address.
+
+Example:
+
+```bash
+DOMAIN="example.com"
+EMAIL="admin@example.com"
+```
+
+These variables are used to obtain an SSL certificate using Certbot.
+
+### 6. Verify and Test Your Setup
+
+Ensure everything is set up correctly:
+
+- **Check Satisfactory Server Status**:
+  ```bash
+  sudo systemctl status satisfactory
+  ```
+
+- **Check AMP Status**:
+  ```bash
+  sudo systemctl status ampinstmgr@SatisfactoryInstance
+  ```
 
 ## 🔒 Services and Security Configuration
 
@@ -146,7 +151,9 @@ The server is automatically restarted daily via the `restart_satisfactory.sh` sc
 
 ## 📝 Final Remarks
 
-These scripts are designed to make managing a Satisfactory server on Debian easy and efficient, while using AMP for a powerful and intuitive web interface. They can be adapted to meet specific needs. For any questions or suggestions for improvement, feel free to contact me.
+These scripts are designed to make managing a Satisfactory server on Debian or Ubuntu easy and efficient, while using AMP for a powerful and intuitive web interface. They can be adapted to meet specific needs. Be sure to update the necessary variables in the scripts, such as the domain and email for SSL configuration in AMP.
+
+For any questions or suggestions for improvement, feel free to contact me.
 
 ---
 

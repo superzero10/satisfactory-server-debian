@@ -25,9 +25,9 @@ This repository contains a series of scripts to **install**, **configure**, and 
 
 Run the main script to install and configure the Satisfactory server.
 
-\`\`\`bash
+```bash
 sudo bash install_satisfactory_server.sh
-\`\`\`
+```
 
 This script performs the following operations:
 - Updates the system.
@@ -44,15 +44,15 @@ The `backup_satisfactory.sh` script creates daily backups of the server and dele
 
 To automate this task, add it to `cron`:
 
-\`\`\`bash
+```bash
 crontab -e
-\`\`\`
+```
 
 Add the following line to run it daily at 4 AM:
 
-\`\`\`cron
+```cron
 0 4 * * * /home/satisfactory/backup_satisfactory.sh
-\`\`\`
+```
 
 ### 3. Automated Updates
 
@@ -60,15 +60,15 @@ The `update_satisfactory.sh` script checks for and applies server updates via St
 
 Add this script to `cron` to run it daily at 3 AM:
 
-\`\`\`bash
+```bash
 crontab -e
-\`\`\`
+```
 
 Add the following line:
 
-\`\`\`cron
+```cron
 0 3 * * * /home/satisfactory/update_satisfactory.sh
-\`\`\`
+```
 
 ### 4. Daily Restart
 
@@ -76,23 +76,23 @@ The `restart_satisfactory.sh` script restarts the server daily to maintain optim
 
 Add this script to `cron` to run it daily at 5 AM:
 
-\`\`\`bash
+```bash
 crontab -e
-\`\`\`
+```
 
 Add the following line:
 
-\`\`\`cron
+```cron
 0 5 * * * /home/satisfactory/restart_satisfactory.sh
-\`\`\`
+```
 
 ### 5. Install the Web Interface (AMP)
 
 To install and configure AMP to manage your Satisfactory server, run the following script:
 
-\`\`\`bash
+```bash
 sudo bash install_amp.sh
-\`\`\`
+```
 
 This script:
 - Installs the prerequisites for AMP.
@@ -112,22 +112,25 @@ After installation, access the AMP interface at `http://your_domain.com:8080`.
 
 ### Main Commands
 
-- **Start the server**: 
-  \`\`\`bash
+- **Start the server**:
+  ```bash
   sudo systemctl start satisfactory
-  \`\`\`
-- **Stop the server**: 
-  \`\`\`bash
+  ```
+
+- **Stop the server**:
+  ```bash
   sudo systemctl stop satisfactory
-  \`\`\`
-- **Restart the server**: 
-  \`\`\`bash
+  ```
+
+- **Restart the server**:
+  ```bash
   sudo systemctl restart satisfactory
-  \`\`\`
-- **Check server status**: 
-  \`\`\`bash
+  ```
+
+- **Check server status**:
+  ```bash
   sudo systemctl status satisfactory
-  \`\`\`
+  ```
 
 ### Backups
 
